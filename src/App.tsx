@@ -2,20 +2,50 @@ import { useState } from 'react';
 import './App.css'
 import TradingProjection from './components/TradingProjection'
 
-function App() {
-  const [totalWeeks, setTotalWeeks] = useState(52)
+const weeksPerMonth = 4.34 // Approximate weeks per month
+const weeksPerYear = 52 // Approximate weeks per year
 
-  const handleDurationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const changeValue = Number(e.target.value)
-    if(isNaN(changeValue)) {
-      setTotalWeeks(52)
-      alert('Invalid Number')
+function App() {
+  const [totalWeeks, setTotalWeeks] = useState(weeksPerYear)
+  const [visibleDuration, setVisibleDuration] = useState(totalWeeks)
+  const [durationUnit, setDurationUnit] = useState('weeks')
+
+  const handleDurationUnitChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const unit = e.target.value;
+    setDurationUnit(unit);
+    switch (unit) {
+      case 'weeks':
+        setVisibleDuration(totalWeeks);
+        break;
+      case 'months':
+        setVisibleDuration(Math.ceil(totalWeeks / weeksPerMonth)); // Approximate weeks per month
+        break;
+      case 'years':
+        setVisibleDuration(Math.ceil(totalWeeks / weeksPerYear)); // Approximate weeks per year
+        break;
+      default:
+        setVisibleDuration(totalWeeks);
     }
-    if(changeValue <= 1) {
-      alert('Please use more than one week')
-      setTotalWeeks(10)
-    } else {
-      setTotalWeeks(Number(e.target.value));
+  };
+
+  const handleVisibleDurationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newDuration = Number(e.target.value);
+    if (isNaN(newDuration) || newDuration < 1) {
+      return;
+    }
+    setVisibleDuration(newDuration);
+    switch (durationUnit) {
+      case 'weeks':
+        setTotalWeeks(newDuration);
+        break;
+      case 'months':
+        setTotalWeeks(newDuration * weeksPerMonth); // Convert months to weeks
+        break;
+      case 'years':
+        setTotalWeeks(newDuration * weeksPerYear); // Convert years to weeks
+        break;
+      default:
+        setTotalWeeks(newDuration);
     }
   };
   return (
@@ -33,11 +63,21 @@ function App() {
         <input
           name="durationSelector"
           type="number"
-          value={totalWeeks}
-          onChange={handleDurationChange}
+          value={visibleDuration}
+          onChange={handleVisibleDurationChange}
           className="w-32 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-center"
           min={1}
         />
+        <select
+          name="durationUnit"
+          className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          value={durationUnit}
+          onChange={handleDurationUnitChange}
+        >
+          <option value="weeks">Weeks</option>
+          <option value="months">Months</option>
+          <option value="years">Years</option>
+        </select>
       </div>
       <TradingProjection totalWeeks={totalWeeks}/>
     </>

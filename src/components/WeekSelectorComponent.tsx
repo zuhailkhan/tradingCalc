@@ -13,7 +13,7 @@ const WeekSelectorComponent = ({ selectedWeek, updateSelectedWeek, totalWeeks = 
       <input
         type="range"
         min="1"
-        max="52"
+        max={totalWeeks}
         value={selectedWeek}
         onChange={(e) => updateSelectedWeek(parseInt(e.target.value))}
         className="w-full h-2 bg-blue-200 rounded-lg appearance-none cursor-pointer"

@@ -17,18 +17,18 @@ const TradingProjection = ({ totalWeeks = 52 }: IProps) => {
   const [selectedWeek, setSelectedWeek] = useState(1);
 
   const [config, setConfig] = useState<Config>({
-    initialCapital: 12000,
+    initialCapital: 200000,
     monthlyTopup: 90000,
     riskPerTrade: 2,
-    roiMin: 80,
-    roiMax: 100,
-    winRate: 70,
+    roiMin: 90,
+    roiMax: 150,
+    winRate: 75,
     lossRate: 100,
-    tradesPerWeek: 3,
-    maxLosingStreak: 10,
+    tradesPerWeek: 4,
+    maxLosingStreak: 5,
   });
 
-  const weeksPerMonth = 4.33;
+  const weeksPerMonth = 4.34;
 
   useEffect(() => {
     calculateProjections();
@@ -115,7 +115,7 @@ const TradingProjection = ({ totalWeeks = 52 }: IProps) => {
         )}
 
         {/* Key Insights */}
-        <KeyInsights projectionDataArray={projectionData} />
+        <KeyInsights projectionDataArray={projectionData} totalYears={Math.ceil(totalWeeks / 52)} />
 
         {/* Year-End Summary */}
         <YearEndSummary projectionData={projectionData[totalWeeks - 1]} />
