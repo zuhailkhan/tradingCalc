@@ -10,10 +10,9 @@ import ConfigPanel from "./ConfigPanel";
 
 interface IProps {
   totalWeeks?: number // weeks
-  locale?: string
 }
 
-const TradingProjection = ({ totalWeeks = 52, locale: string }: IProps) => {
+const TradingProjection = ({ totalWeeks = 52 }: IProps) => {
   const [projectionData, setProjectionData] = useState<Projection[]>([]);
   const [selectedWeek, setSelectedWeek] = useState(1);
 
