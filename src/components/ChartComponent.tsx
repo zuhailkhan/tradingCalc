@@ -8,13 +8,15 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { formatCurrency } from "../utils";
+import { formatCurrency, getCurrencySymbol } from "../utils";
+import { useMemo } from "react";
 
 export interface IProps {
   projectionDataArray: Projection[];
 }
 
 const ChartComponent = ({ projectionDataArray }: IProps) => {
+  const currencySymbol = useMemo(() => getCurrencySymbol(), []);
   return (
     <div className="mb-8">
       <h2 className="text-xl font-semibold mb-4 text-gray-800">
@@ -24,7 +26,11 @@ const ChartComponent = ({ projectionDataArray }: IProps) => {
         <LineChart data={projectionDataArray}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="week" />
-          <YAxis tickFormatter={(value) => `₹${(value / 1000).toFixed(0)}K`} />
+          <YAxis
+            tickFormatter={(value) =>
+              `${currencySymbol}${(value / 1000).toFixed(0)}K`
+            }
+          />
           <Tooltip
             formatter={(value, name) => [formatCurrency(Number(value)), name]}
             labelFormatter={(week) => `Week ${week}`}

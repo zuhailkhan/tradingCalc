@@ -10,9 +10,10 @@ import ConfigPanel from "./ConfigPanel";
 
 interface IProps {
   totalWeeks?: number // weeks
+  locale?: string
 }
 
-const TradingProjection = ({ totalWeeks = 52 }: IProps) => {
+const TradingProjection = ({ totalWeeks = 52, locale: string }: IProps) => {
   const [projectionData, setProjectionData] = useState<Projection[]>([]);
   const [selectedWeek, setSelectedWeek] = useState(1);
 
@@ -32,7 +33,7 @@ const TradingProjection = ({ totalWeeks = 52 }: IProps) => {
 
   useEffect(() => {
     calculateProjections();
-  }, [config]);
+  }, [config, totalWeeks]);
 
   const calculateProjections = () => {
     const data = [];
@@ -89,9 +90,9 @@ const TradingProjection = ({ totalWeeks = 52 }: IProps) => {
   return (
     <div className="max-w-7xl mx-auto p-6 bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
       <div className="bg-white rounded-xl shadow-2xl p-8">
-        
+
         {/* Chart */}
-        <ChartComponent projectionDataArray={projectionData} />
+        <ChartComponent projectionDataArray={projectionData}/>
 
         {/* Config Panel */}
         <ConfigPanel
