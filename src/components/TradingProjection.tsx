@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import ProjectionAssumptions from "./ProjectionAssumptions";
 import RiskMetrics from "./RiskMetrics";
-import YearEndSummary from "./YearEndSummary";
 import KeyInsights from "./KeyInsights";
 import ChartComponent from "./ChartComponent";
 import DetailsByWeek from "./DetailsByWeek";
 import WeekSelectorComponent from "./WeekSelectorComponent";
 import ConfigPanel from "./ConfigPanel";
+import EndSummary from "./EndSummary";
 
 interface IProps {
   totalWeeks?: number // weeks
@@ -118,13 +118,10 @@ const TradingProjection = ({ totalWeeks = 52 }: IProps) => {
         <KeyInsights projectionDataArray={projectionData} totalYears={Math.ceil(totalWeeks / 52)} />
 
         {/* Year-End Summary */}
-        <YearEndSummary projectionData={projectionData[totalWeeks - 1]} />
+        <EndSummary projectionData={projectionData.at(-1) as Projection} totalYears={Math.ceil(totalWeeks / 52)} />
 
         {/* Risk Metrics */}
-        <RiskMetrics
-          config={config}
-          projectionData={projectionData[totalWeeks - 1]}
-        />
+        <RiskMetrics config={config} projectionData={projectionData.at(-1) as Projection} />
 
         {/* Assumptions */}
         <ProjectionAssumptions lossRate={config.lossRate} />

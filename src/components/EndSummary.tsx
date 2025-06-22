@@ -1,14 +1,15 @@
-import { formatCurrency } from '../utils';
+import { formatCurrency } from "../utils";
 
 export interface IProps {
-    projectionData: Projection
+  projectionData: Projection;
+  totalYears: number;
 }
 
-const YearEndSummary = ({ projectionData }: IProps) => {
+const EndSummary = ({ projectionData, totalYears }: IProps) => {
   return (
     <div className="bg-indigo-50 p-6 rounded-lg mb-6">
       <h2 className="text-xl font-semibold mb-4 text-gray-800">
-        Year-End Summary
+        {totalYears} Year Summary
       </h2>
       {projectionData && (
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -34,8 +35,7 @@ const YearEndSummary = ({ projectionData }: IProps) => {
             <h3 className="font-semibold text-gray-700">ROI %</h3>
             <p className="text-xl font-bold text-orange-600">
               {(
-                (projectionData.totalProfit /
-                  projectionData.totalInvested) *
+                (projectionData.totalProfit / projectionData.totalInvested) *
                 100
               ).toFixed(1)}
               %
@@ -45,6 +45,6 @@ const YearEndSummary = ({ projectionData }: IProps) => {
       )}
     </div>
   );
-}
+};
 
-export default YearEndSummary
+export default EndSummary;
