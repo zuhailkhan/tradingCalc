@@ -118,7 +118,7 @@ const TradingProjection = ({ totalWeeks = 52 }: IProps) => {
         <KeyInsights projectionDataArray={projectionData} totalYears={Math.ceil(totalWeeks / 52)} />
 
         {/* Year-End Summary */}
-        <EndSummary projectionData={projectionData.at(-1) as Projection} totalYears={Math.ceil(totalWeeks / 52)} />
+        <EndSummary projectionData={projectionData.at(-1) as Projection} totalWeeks={totalWeeks} />
 
         {/* Risk Metrics */}
         <RiskMetrics config={config} projectionData={projectionData.at(-1) as Projection} />

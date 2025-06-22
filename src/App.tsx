@@ -36,13 +36,13 @@ function App() {
     setVisibleDuration(newDuration);
     switch (durationUnit) {
       case 'weeks':
-        setTotalWeeks(newDuration);
+        setTotalWeeks(Math.ceil(newDuration)); // Keep as weeks
         break;
       case 'months':
-        setTotalWeeks(newDuration * weeksPerMonth); // Convert months to weeks
+        setTotalWeeks(Math.ceil(newDuration * weeksPerMonth)); // Convert months to weeks
         break;
       case 'years':
-        setTotalWeeks(newDuration * weeksPerYear); // Convert years to weeks
+        setTotalWeeks(Math.ceil(newDuration * weeksPerYear)); // Convert years to weeks
         break;
       default:
         setTotalWeeks(newDuration);

@@ -2,14 +2,47 @@ import { formatCurrency } from "../utils";
 
 export interface IProps {
   projectionData: Projection;
-  totalYears: number;
+  totalWeeks: number;
 }
 
-const EndSummary = ({ projectionData, totalYears }: IProps) => {
+const EndSummary = ({ projectionData, totalWeeks }: IProps) => {
+
+  const formatYears = (years: number) => {
+    return `${years} year${years > 1 ? "s" : ""}`;
+  };
+
+  const formatMonths = (months: number) => {
+    return `${months} month${months > 1 ? "s" : ""}`;
+  };
+
+  const getSummaryContext = () => {
+    if (!projectionData) {
+      return "No data available for the summary.";
+    }
+
+    const years = Math.floor(totalWeeks / 52);
+    const remainingWeeks = totalWeeks % 52;
+    const months = Math.round(remainingWeeks / 4.345);
+
+    if (totalWeeks % 52 === 0 && years > 0) {
+      return `Summary for ${formatYears(years)} of trading.`;
+    }
+
+    if (years > 0 && months > 0) {
+      return `Summary for ${formatYears(years)} and ${formatMonths(months)} of trading.`;
+    }
+
+    if (years > 0) {
+      return `Summary for ${formatYears(years)} of trading.`;
+    }
+
+    return `Summary for ${formatMonths(months)} of trading.`;
+  };
+
   return (
     <div className="bg-indigo-50 p-6 rounded-lg mb-6">
       <h2 className="text-xl font-semibold mb-4 text-gray-800">
-        {totalYears} Year Summary
+        { getSummaryContext() }
       </h2>
       {projectionData && (
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
