@@ -51,7 +51,7 @@ function App() {
   return (
     <>
       <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
-        Trading PnL Projection
+        Trading Strategy Projection (Randomized)
       </h1>
       <div className="flex gap-4 justify-end items-center mb-6">
         <label
